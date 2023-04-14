@@ -3,6 +3,7 @@ package com.demoprojekt.webshop.controller;
 import com.demoprojekt.webshop.model.ProductResponse;
 import org.springframework.web.bind.annotation.RestController;
 
+
 import java.util.Collections;
 import java.util.List;
 

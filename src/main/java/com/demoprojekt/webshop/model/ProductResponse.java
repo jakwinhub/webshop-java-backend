@@ -4,16 +4,16 @@ import java.util.List;
 
 public class ProductResponse {
 
-    private String id;
-    private String name;
-    private String description;
-    private Integer priceInCent;
-    private List<String> tags;
+    private final String id;
+    private final String name;
+    private final String description;
+    private final Integer priceInCent;
+    private final List<String> tags;
 
     public ProductResponse(String id, String name, String description, Integer priceInCent, List<String> tags) {
         this.id = id;
         this.name = name;
-        this.description = descriptiob;
+        this.description = description;
         this.priceInCent = priceInCent;
         this.tags = tags;
     }
