@@ -2,7 +2,7 @@ package com.demoprojekt.webshop.repository
 
 import com.demoprojekt.webshop.model.OrderPositionResponse
 
-object OrderPositionRepository {
+class OrderPositionRepository {
 
     val orderPositions = mutableListOf<OrderPositionResponse>()
 
