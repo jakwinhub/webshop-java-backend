@@ -2,11 +2,24 @@ package com.demoprojekt.webshop.repository;
 
 import com.demoprojekt.webshop.model.ProductCreateRequest;
 import com.demoprojekt.webshop.model.ProductResponse;
+import org.springframework.stereotype.Service;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
+@Service
 public class ProductRepository {
+
+    // Singleton Pattern (ein repository auf welches 2 mal zugegriffen wird)
+    /*
+    private static ProductRepository theRepository;
+    public static ProductRepository getProductRepository() {
+        if (theRepository == null) {
+            theRepository = new ProductRepository();
+        }
+        return theRepository;
+    }
+     */
     List<ProductResponse> products = new ArrayList<>();
 
     public ProductRepository() {

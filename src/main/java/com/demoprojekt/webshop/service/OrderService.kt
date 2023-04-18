@@ -8,18 +8,21 @@ import com.demoprojekt.webshop.repository.CustomerRepositroy
 import com.demoprojekt.webshop.repository.OrderPositionRepository
 import com.demoprojekt.webshop.repository.OrderRepository
 import com.demoprojekt.webshop.repository.ProductRepository
+import org.springframework.stereotype.Service
 import java.util.UUID
 
-class OrderService {
+@Service
+class OrderService(
+        val productRepository: ProductRepository,
+        val orderRepositroy: OrderRepository,
+        val orderPositionRepositroy: OrderPositionRepository,
+        val customerRepository: CustomerRepositroy
+) {
 
-    val orderRepositroy = OrderRepository()
-    val orderPositionRepositroy = OrderPositionRepository
-    val customerRepository = CustomerRepositroy()
-    val productRepository = ProductRepository()
 
     fun createOrder(request: OrderCreateRequest): OrderResponse {
 
-        val customer = customerRepository.findById(request.customerId)
+        customerRepository.findById(request.customerId)
                 ?: throw Exception("Customer not found")
 
         return orderRepositroy.save(request)
@@ -30,8 +33,8 @@ class OrderService {
         orderRepositroy.findById(orderId)
                 ?: throw Exception("Order not found")
 
-        if(productRepository.findById(request.productId).isEmpty)
-                throw Exception("Product not found")
+        if (productRepository.findById(request.productId).isEmpty)
+            throw Exception("Product not found")
 
         val orderPositionResponse = OrderPositionResponse(
                 id = UUID.randomUUID().toString(),

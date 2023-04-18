@@ -1,8 +1,10 @@
 package com.demoprojekt.webshop.repository
 
 import com.demoprojekt.webshop.model.CustomerResponse
-import java.util.UUID
+import org.springframework.stereotype.Service
 
+
+@Service
 class CustomerRepositroy {
 
     val customers = listOf(
