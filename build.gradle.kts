@@ -18,6 +18,7 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-web")
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.9.6")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
+	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	implementation(kotlin("stdlib-jdk8"))
 }
 
@@ -25,3 +26,4 @@ dependencies {
 tasks.withType<Test> {
 	useJUnitPlatform()
 }
+
