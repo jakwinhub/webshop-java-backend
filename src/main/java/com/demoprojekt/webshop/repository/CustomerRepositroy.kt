@@ -1,5 +1,6 @@
 package com.demoprojekt.webshop.repository
 
+import com.demoprojekt.webshop.exceptions.IdNotFoundException
 import com.demoprojekt.webshop.model.CustomerResponse
 import org.springframework.stereotype.Service
 
@@ -16,7 +17,7 @@ class CustomerRepositroy {
             )
     )
 
-    fun findById(id: String): CustomerResponse? {
-        return customers.find { it.id == id }
+    fun findById(id: String): CustomerResponse {
+        return customers.find { it.id == id } ?: throw IdNotFoundException("Customer with id $id not found")
     }
 }
