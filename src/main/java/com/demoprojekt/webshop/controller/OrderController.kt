@@ -4,10 +4,12 @@ import com.demoprojekt.webshop.exceptions.WebshopException
 import com.demoprojekt.webshop.model.OrderCreateRequest
 import com.demoprojekt.webshop.model.OrderPositionCreateRequest
 import com.demoprojekt.webshop.model.OrderResponse
+import com.demoprojekt.webshop.model.OrderUpdateRequest
 import com.demoprojekt.webshop.service.OrderService
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RestController
 
@@ -27,5 +29,13 @@ class OrderController(
             @PathVariable(name = "id") orderId: String,
             @RequestBody request: OrderPositionCreateRequest) {
         orderService.createNewPositionForOrder(orderId, request)
+    }
+
+    @PutMapping("/orders/{id}")
+    fun updateOrder(
+            @PathVariable id: String,
+            @RequestBody request: OrderUpdateRequest
+    ){
+        orderService.updateOrder(id, request)
     }
 }

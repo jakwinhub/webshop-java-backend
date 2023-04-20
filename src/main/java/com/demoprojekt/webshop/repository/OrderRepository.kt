@@ -12,15 +12,7 @@ open class OrderRepository {
 
     private val orders = mutableListOf<OrderResponse>()
 
-    fun save(request: OrderCreateRequest): OrderResponse {
-
-        val orderResponse = OrderResponse(
-                id = UUID.randomUUID().toString(),
-                customerId = request.customerId,
-                orderTimer = LocalDateTime.now(),
-                status = OrderStatus.NEW,
-                orderPositions = emptyList()
-        )
+    fun save(orderResponse: OrderResponse): OrderResponse {
 
         orders.add(orderResponse)
         return orderResponse

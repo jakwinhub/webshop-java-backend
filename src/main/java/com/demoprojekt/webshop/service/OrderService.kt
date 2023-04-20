@@ -2,16 +2,15 @@ package com.demoprojekt.webshop.service
 
 import com.demoprojekt.webshop.exceptions.IdNotFoundException
 import com.demoprojekt.webshop.exceptions.WebshopException
-import com.demoprojekt.webshop.model.OrderCreateRequest
-import com.demoprojekt.webshop.model.OrderPositionCreateRequest
-import com.demoprojekt.webshop.model.OrderPositionResponse
-import com.demoprojekt.webshop.model.OrderResponse
+import com.demoprojekt.webshop.model.*
 import com.demoprojekt.webshop.repository.CustomerRepositroy
 import com.demoprojekt.webshop.repository.OrderPositionRepository
 import com.demoprojekt.webshop.repository.OrderRepository
 import com.demoprojekt.webshop.repository.ProductRepository
 import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Service
+import java.net.IDN
+import java.time.LocalDateTime
 import java.util.UUID
 
 @Service
@@ -27,7 +26,15 @@ class OrderService(
 
         customerRepository.findById(request.customerId)
 
-        return orderRepositroy.save(request)
+        val orderResponse = OrderResponse(
+                id = UUID.randomUUID().toString(),
+                customerId = request.customerId,
+                orderTimer = LocalDateTime.now(),
+                status = OrderStatus.NEW,
+                orderPositions = emptyList()
+        )
+
+        return orderRepositroy.save(orderResponse)
     }
 
     fun createNewPositionForOrder(orderId: String, request: OrderPositionCreateRequest): OrderPositionResponse {
@@ -49,5 +56,16 @@ class OrderService(
         orderPositionRepositroy.save(orderPositionResponse)
 
         return orderPositionResponse
+    }
+
+    fun updateOrder(id: String, request: OrderUpdateRequest): OrderResponse {
+        val order: OrderResponse = orderRepositroy.findById(id)
+                ?: throw IdNotFoundException("Order with id" + id + "not found")
+
+        val updatedOrder = order.copy(
+                status = request.orderStatus ?: order.status
+        )
+
+        return orderRepositroy.save(updatedOrder)
     }
 }

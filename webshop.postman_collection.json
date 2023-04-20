@@ -66,6 +66,85 @@
 			"response": []
 		},
 		{
+			"name": "GET Customer Shopping Cart",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/api/customers/1/shoppingcart",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"customers",
+						"1",
+						"shoppingcart"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PUT Product",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"AMD Ryzen 7 3800X\",\r\n    \"description\": \"Lorem Ipsum\",\r\n    \"priceInCent\": 34499\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/api/products/1",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"products",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PUT Order",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"orderStatus\": \"DELIVERED\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/api/orders/1",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"orders",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "POST Products",
 			"request": {
 				"method": "POST",
@@ -128,7 +207,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"customerId\": \"1\"\r\n}\r\n",
+					"raw": "{\r\n    \"productId\": \"3f9270ff-4682-4f62-8aff-a925931757c4\",\r\n    \"quantity\": 5\r\n}\r\n",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -136,14 +215,16 @@
 					}
 				},
 				"url": {
-					"raw": "localhost:8080/api/orders",
+					"raw": "localhost:8080/api/orders/9ddf9033-da86-4034-acf3-730a42cba0b6/positions",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
 						"api",
-						"orders"
+						"orders",
+						"9ddf9033-da86-4034-acf3-730a42cba0b6",
+						"positions"
 					]
 				}
 			},
