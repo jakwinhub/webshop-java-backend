@@ -8,7 +8,7 @@ import java.time.LocalDateTime
 import java.util.UUID
 
 @Service
-class OrderRepository {
+open class OrderRepository {
 
     private val orders = mutableListOf<OrderResponse>()
 

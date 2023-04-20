@@ -3,7 +3,8 @@ plugins {
 	id("org.springframework.boot") version "3.0.5"
 	id("io.spring.dependency-management") version "1.1.0"
 	id("org.jetbrains.kotlin.jvm") version "1.8.20"
-
+	id ("org.jetbrains.kotlin.plugin.allopen") version "1.8.20"
+	id ("org.jetbrains.kotlin.plugin.spring") version "1.8.20"
 }
 
 group = "com.demoprojekt"
