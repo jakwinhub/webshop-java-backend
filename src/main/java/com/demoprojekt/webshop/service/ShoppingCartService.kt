@@ -1,10 +1,11 @@
 package com.demoprojekt.webshop.service
 
+import com.demoprojekt.webshop.entity.ProductEntity
 import com.demoprojekt.webshop.exceptions.IdNotFoundException
 import com.demoprojekt.webshop.model.OrderPositionResponse
-import com.demoprojekt.webshop.model.OrderResponse
 import com.demoprojekt.webshop.model.ProductResponse
 import com.demoprojekt.webshop.model.ShoppingCartResponse
+import com.demoprojekt.webshop.repository.OrderEntity
 import com.demoprojekt.webshop.repository.OrderPositionRepository
 import com.demoprojekt.webshop.repository.OrderRepository
 import com.demoprojekt.webshop.repository.ProductRepository
@@ -20,10 +21,10 @@ class ShoppingCartService(
 
     fun getShoppingCartForCustomer(customerId: String): ShoppingCartResponse {
 
-        val orders: List<OrderResponse> = orderRepository.findAllByCustomerIdWhereOrderStatusIsNew(customerId)
+        val orders: List<OrderEntity> = orderRepository.findAllByCustomerIdWhereOrderStatusIsNew(customerId)
         val orderIds = orders.map { it.id }
 
-        val orderPositions = orderPositionRepository.findAllByOrderIds(orderIds)
+        val orderPositions = orderPositionRepository.findAllById(orderIds).map{ OrderService.mapToResponse(it)}
         val deliveryCost = 800L  // TODO: feature to select delivery method
         val totalAmount = calculateSumForCart(orderPositions, deliveryCost)
 
@@ -38,7 +39,7 @@ class ShoppingCartService(
 
     fun calculateSumForCart(orderPositions: List<OrderPositionResponse>, deliveryCost: Long): Long {
         val positionAmounts: List<Long> = orderPositions.map {
-            val product: ProductResponse = productRepository
+            val product: ProductEntity = productRepository
                     .findById(it.productId)
                     .orElseThrow { throw IdNotFoundException("Product with id ${it.productId} not found") }
             if (it.quantity <= 0) {
