@@ -1,13 +1,17 @@
 package com.demoprojekt.webshop.repository
 
 import com.demoprojekt.webshop.model.OrderCreateRequest
+import com.demoprojekt.webshop.model.OrderPositionResponse
 import com.demoprojekt.webshop.model.OrderResponse
 import com.demoprojekt.webshop.model.OrderStatus
+import jakarta.persistence.*
+import org.springframework.data.jpa.repository.JpaRepository
+import org.springframework.data.jpa.repository.Query
 import org.springframework.stereotype.Service
 import java.time.LocalDateTime
 import java.util.UUID
 
-@Service
+/*@Service
 open class OrderRepository {
 
     private val orders = mutableListOf<OrderResponse>()
@@ -27,3 +31,20 @@ open class OrderRepository {
     }
 
 }
+*/
+
+interface OrderRepository : JpaRepository<OrderEntity, String> {
+    @Query("SELECT e FROM OrderEntity e where e.status = 'new' and e.customerId = :customerId")
+    abstract fun findAllByCustomerIdWhereOrderStatusIsNew(customerId: String): List<OrderEntity>
+}
+
+@Entity
+@Table(name = "orders")
+data class OrderEntity(
+        @Id val id: String,
+        val customerId: String,
+        val orderTimer: LocalDateTime,
+
+        @Enumerated(EnumType.STRING)
+        val status: OrderStatus
+)

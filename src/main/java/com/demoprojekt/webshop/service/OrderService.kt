@@ -1,18 +1,14 @@
 package com.demoprojekt.webshop.service
 
 import com.demoprojekt.webshop.exceptions.IdNotFoundException
-import com.demoprojekt.webshop.exceptions.WebshopException
 import com.demoprojekt.webshop.model.*
-import com.demoprojekt.webshop.repository.CustomerRepositroy
-import com.demoprojekt.webshop.repository.OrderPositionRepository
-import com.demoprojekt.webshop.repository.OrderRepository
-import com.demoprojekt.webshop.repository.ProductRepository
+import com.demoprojekt.webshop.repository.*
 import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Service
-import java.net.IDN
 import java.time.LocalDateTime
 import java.util.UUID
 
+@Suppress("DEPRECATION")
 @Service
 class OrderService(
         val productRepository: ProductRepository,
@@ -26,15 +22,15 @@ class OrderService(
 
         customerRepository.findById(request.customerId)
 
-        val orderResponse = OrderResponse(
+        val order = OrderEntity(
                 id = UUID.randomUUID().toString(),
                 customerId = request.customerId,
                 orderTimer = LocalDateTime.now(),
-                status = OrderStatus.NEW,
-                orderPositions = emptyList()
+                status = OrderStatus.NEW
         )
+        val savedOrder = orderRepositroy.save(order)
 
-        return orderRepositroy.save(orderResponse)
+        return mapToResponse(savedOrder)
     }
 
     fun createNewPositionForOrder(orderId: String, request: OrderPositionCreateRequest): OrderPositionResponse {
@@ -47,25 +43,43 @@ class OrderService(
             throw throw IdNotFoundException(message = "Product with ${request.productId} not found",
                     statusCode = HttpStatus.BAD_REQUEST)
 
-        val orderPositionResponse = OrderPositionResponse(
+        val orderPosition = OrderPositionEntity(
                 id = UUID.randomUUID().toString(),
                 orderId = orderId,
                 productId = request.productId,
                 quantity = request.quantity
         )
-        orderPositionRepositroy.save(orderPositionResponse)
+        val savedOrderPosition = orderPositionRepositroy.save(orderPosition)
 
-        return orderPositionResponse
+        return mapToResponse(savedOrderPosition)
+    }
+
+    companion object{
+        fun mapToResponse(savedOrderPosition: OrderPositionEntity) =
+                OrderPositionResponse(
+                        id = savedOrderPosition.id,
+                        orderId = savedOrderPosition.orderId,
+                        productId = savedOrderPosition.productId,
+                        quantity = savedOrderPosition.quantity
+                )
     }
 
     fun updateOrder(id: String, request: OrderUpdateRequest): OrderResponse {
-        val order: OrderResponse = orderRepositroy.findById(id)
-                ?: throw IdNotFoundException("Order with id" + id + "not found")
-
+        val order = orderRepositroy.getOne(id)
         val updatedOrder = order.copy(
                 status = request.orderStatus ?: order.status
         )
 
-        return orderRepositroy.save(updatedOrder)
+        val savedOrder = orderRepositroy.save(updatedOrder)
+
+        return mapToResponse(savedOrder)
     }
+
+    private fun mapToResponse(savedOrder: OrderEntity) = OrderResponse(
+            id = savedOrder.id,
+            customerId = savedOrder.customerId,
+            orderTimer = savedOrder.orderTimer,
+            status = savedOrder.status,
+            orderPositions = emptyList()
+    )
 }

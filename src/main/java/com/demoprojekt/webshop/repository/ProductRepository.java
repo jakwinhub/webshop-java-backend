@@ -1,25 +1,30 @@
 package com.demoprojekt.webshop.repository;
 
+import com.demoprojekt.webshop.entity.ProductEntity;
 import com.demoprojekt.webshop.model.ProductCreateRequest;
 import com.demoprojekt.webshop.model.ProductResponse;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
-@Service
+/* @Service
 public class ProductRepository {
 
     // Singleton Pattern (ein repository auf welches 2 mal zugegriffen wird)
-    /*
-    private static ProductRepository theRepository;
-    public static ProductRepository getProductRepository() {
-        if (theRepository == null) {
-            theRepository = new ProductRepository();
-        }
-        return theRepository;
-    }
-     */
+    //
+    //private static ProductRepository theRepository;
+    //public static ProductRepository getProductRepository() {
+    //    if (theRepository == null) {
+    //        theRepository = new ProductRepository();
+    //    }
+    //    return theRepository;
+    //}
+
+
     List<ProductResponse> products = new ArrayList<>();
 
     public ProductRepository() {
@@ -83,4 +88,9 @@ public class ProductRepository {
         products.add(response);
         return response;
     }
+}
+*/
+
+public interface ProductRepository extends JpaRepository<ProductEntity, String > {
+
 }

@@ -1,5 +1,6 @@
 package com.demoprojekt.webshop.service;
 
+import com.demoprojekt.webshop.entity.ProductEntity;
 import com.demoprojekt.webshop.exceptions.IdNotFoundException;
 import com.demoprojekt.webshop.model.OrderPositionResponse;
 import com.demoprojekt.webshop.model.ProductCreateRequest;
@@ -53,7 +54,7 @@ public class ShoppingCartServiceTest {
     @Test
     public void testThat_calculateSumWithOneProduct_sumsPriceOfProducts() {
         // given
-        ProductResponse savedProduct = new ProductResponse(
+        ProductEntity savedProduct = new ProductEntity(
                 UUID.randomUUID().toString(),
                 "",
                 "",
@@ -75,7 +76,7 @@ public class ShoppingCartServiceTest {
     @Test
     public void testThat_calculateSumWithTwoProduct_sumsPriceOfProducts() {
         // given
-        ProductResponse savedProduct1 = new ProductResponse(
+        ProductEntity savedProduct1 = new ProductEntity(
                 UUID.randomUUID().toString(),
                 "",
                 "",
@@ -84,7 +85,7 @@ public class ShoppingCartServiceTest {
         );
         given(productRepository.findById(savedProduct1.getId())).willReturn(Optional.of(savedProduct1));
 
-        ProductResponse savedProduct2 = new ProductResponse(
+        ProductEntity savedProduct2 = new ProductEntity(
                 UUID.randomUUID().toString(),
                 "",
                 "",
@@ -107,7 +108,7 @@ public class ShoppingCartServiceTest {
     @Test
     public void testThat_calculateSumWithNegativeProduct_throwsException() {
         // given
-        ProductResponse savedProduct1 = new ProductResponse(
+        ProductEntity savedProduct1 = new ProductEntity(
                 UUID.randomUUID().toString(),
                 "",
                 "",
@@ -116,7 +117,7 @@ public class ShoppingCartServiceTest {
         );
         given(productRepository.findById(savedProduct1.getId())).willReturn(Optional.of(savedProduct1));
 
-        ProductResponse savedProduct2 = new ProductResponse(
+        ProductEntity savedProduct2 = new ProductEntity(
                 UUID.randomUUID().toString(),
                 "",
                 "",
@@ -139,7 +140,7 @@ public class ShoppingCartServiceTest {
     @Test
     public void testThat_calculateSumWithNotExistingProduct_ThrowsException() {
         // given
-        ProductResponse notSavedProduct = new ProductResponse("", "", "", 1000, new ArrayList<>());
+        ProductEntity notSavedProduct = new ProductEntity("", "", "", 1000, new ArrayList<>());
 
         List<OrderPositionResponse> orderPositions = new ArrayList<>();
         addOrderPosition(orderPositions, notSavedProduct, 1);
@@ -152,7 +153,7 @@ public class ShoppingCartServiceTest {
     }
 
 
-    private void addOrderPosition(List<OrderPositionResponse> orderPositions, ProductResponse savedProduct, int quantity) {
+    private void addOrderPosition(List<OrderPositionResponse> orderPositions, ProductEntity savedProduct, int quantity) {
         orderPositions.add(
                 new OrderPositionResponse(
                         "1",
