@@ -1,12 +1,10 @@
 package com.demoprojekt.webshop.controller
 
 import com.demoprojekt.webshop.exceptions.WebshopException
-import com.demoprojekt.webshop.model.OrderCreateRequest
-import com.demoprojekt.webshop.model.OrderPositionCreateRequest
-import com.demoprojekt.webshop.model.OrderResponse
-import com.demoprojekt.webshop.model.OrderUpdateRequest
+import com.demoprojekt.webshop.model.*
 import com.demoprojekt.webshop.service.OrderService
 import org.springframework.http.ResponseEntity
+import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.PutMapping
@@ -38,4 +36,10 @@ class OrderController(
     ){
         orderService.updateOrder(id, request)
     }
+
+    @GetMapping("/orders/{id}")
+    fun getOrder(@PathVariable id: String): GetOrderResponse {
+        return orderService.getOrder(id);
+    }
+
 }
