@@ -1,6 +1,5 @@
 package com.demoprojekt.webshop.model
 
-import jakarta.persistence.Id
 import java.time.LocalDateTime
 
 data class GetOrderResponse (

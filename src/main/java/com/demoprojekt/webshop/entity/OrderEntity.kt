@@ -1,6 +1,7 @@
 package com.demoprojekt.webshop.entity
 
 import com.demoprojekt.webshop.model.OrderStatus
+import com.demoprojekt.webshop.repository.OrderPositionEntity
 import jakarta.persistence.*
 import java.time.LocalDateTime
 
@@ -12,5 +13,8 @@ data class OrderEntity(
         val orderTime: LocalDateTime,
 
         @Enumerated(EnumType.STRING)
-        val status: OrderStatus
+        val status: OrderStatus,
+
+        @ElementCollection
+        val orderPositions: List<OrderPositionEntity>
 )

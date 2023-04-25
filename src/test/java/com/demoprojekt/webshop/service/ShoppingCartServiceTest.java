@@ -3,9 +3,6 @@ package com.demoprojekt.webshop.service;
 import com.demoprojekt.webshop.entity.ProductEntity;
 import com.demoprojekt.webshop.exceptions.IdNotFoundException;
 import com.demoprojekt.webshop.model.OrderPositionResponse;
-import com.demoprojekt.webshop.model.ProductCreateRequest;
-import com.demoprojekt.webshop.model.ProductResponse;
-import com.demoprojekt.webshop.repository.OrderPositionRepository;
 import com.demoprojekt.webshop.repository.OrderRepository;
 import com.demoprojekt.webshop.repository.ProductRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -18,8 +15,8 @@ import java.util.UUID;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.mock;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.mock;
 
 
 public class ShoppingCartServiceTest {
@@ -32,7 +29,6 @@ public class ShoppingCartServiceTest {
         productRepository = mock(ProductRepository.class);
         service = new ShoppingCartService(
                 mock(OrderRepository.class),
-                mock(OrderPositionRepository.class),
                 productRepository
         );
     }

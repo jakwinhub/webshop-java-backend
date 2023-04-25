@@ -7,25 +7,6 @@
 	},
 	"item": [
 		{
-			"name": "GET Products",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "localhost:8080/api/products",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"api",
-						"products"
-					]
-				}
-			},
-			"response": []
-		},
-		{
 			"name": "GET Order",
 			"request": {
 				"method": "GET",
@@ -40,6 +21,25 @@
 						"api",
 						"orders",
 						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET Products",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/api/products",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"products"
 					]
 				}
 			},

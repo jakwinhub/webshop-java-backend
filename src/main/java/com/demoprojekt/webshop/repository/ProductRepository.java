@@ -1,15 +1,7 @@
 package com.demoprojekt.webshop.repository;
 
 import com.demoprojekt.webshop.entity.ProductEntity;
-import com.demoprojekt.webshop.model.ProductCreateRequest;
-import com.demoprojekt.webshop.model.ProductResponse;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Service;
-
-import java.util.*;
-import java.util.stream.Collectors;
 
 /* @Service
 public class ProductRepository {
