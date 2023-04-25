@@ -26,6 +26,26 @@
 			"response": []
 		},
 		{
+			"name": "GET Order",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/api/orders/1",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"orders",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "GET Product by Id",
 			"request": {
 				"method": "GET",

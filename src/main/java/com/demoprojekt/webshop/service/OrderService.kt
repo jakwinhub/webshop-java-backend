@@ -1,5 +1,6 @@
 package com.demoprojekt.webshop.service
 
+import com.demoprojekt.webshop.entity.OrderEntity
 import com.demoprojekt.webshop.exceptions.IdNotFoundException
 import com.demoprojekt.webshop.model.*
 import com.demoprojekt.webshop.repository.*
@@ -25,7 +26,7 @@ class OrderService(
         val order = OrderEntity(
                 id = UUID.randomUUID().toString(),
                 customerId = request.customerId,
-                orderTimer = LocalDateTime.now(),
+                orderTime = LocalDateTime.now(),
                 status = OrderStatus.NEW
         )
         val savedOrder = orderRepositroy.save(order)
@@ -78,8 +79,46 @@ class OrderService(
     private fun mapToResponse(savedOrder: OrderEntity) = OrderResponse(
             id = savedOrder.id,
             customerId = savedOrder.customerId,
-            orderTimer = savedOrder.orderTimer,
+            orderTimer = savedOrder.orderTime,
             status = savedOrder.status,
             orderPositions = emptyList()
     )
+
+    fun getOrder(id: String): GetOrderResponse {
+        val order = orderRepositroy.getOne(id)
+
+        val customer = customerRepository.getOne(order.customerId)
+
+        val positions = orderPositionRepositroy
+                .findAll()
+                .filter { it.orderId == order.id }
+                .map {
+                    val productEntity = productRepository.getOne(it.productId)
+                    GetOrderPositionResponse(
+                        id = it.id,
+                        quantity = it.quantity,
+                        product = ProductResponse(
+                                productEntity.id,
+                                productEntity.name,
+                                productEntity.description,
+                                productEntity.priceInCent,
+                                productEntity.tags
+                        )
+                )
+                }
+
+        return GetOrderResponse(
+                id = order.id,
+                status = order.status,
+                orderTime = order.orderTime,
+                customer = CustomerResponse(
+                        id = customer.id,
+                        firstName = customer.firstName,
+                        lastName = customer.lastName,
+                        email = customer.email
+                ),
+                orderPositions = positions
+        )
+
+    }
 }
