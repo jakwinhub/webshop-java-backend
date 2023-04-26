@@ -1,4 +1,4 @@
-package com.demoprojekt.webshop.repository
+package com.demoprojekt.webshop.entity
 
 import jakarta.persistence.Embeddable
 

@@ -5,7 +5,6 @@ import com.demoprojekt.webshop.entity.ProductEntity
 import com.demoprojekt.webshop.exceptions.IdNotFoundException
 import com.demoprojekt.webshop.model.OrderPositionResponse
 import com.demoprojekt.webshop.model.ShoppingCartResponse
-import com.demoprojekt.webshop.repository.OrderPositionEntity
 import com.demoprojekt.webshop.repository.OrderRepository
 import com.demoprojekt.webshop.repository.ProductRepository
 import org.springframework.stereotype.Service

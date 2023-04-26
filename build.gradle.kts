@@ -22,6 +22,10 @@ dependencies {
 	runtimeOnly("com.h2database:h2:2.1.210")
 	implementation("org.flywaydb:flyway-core")
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.9.6")
+
+	// https://mvnrepository.com/artifact/org.flywaydb.flyway-test-extensions/flyway-test
+	//testImplementation("org.flywaydb.flyway-test-extensions:flyway-test:9.5.0")
+
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	implementation(kotlin("stdlib-jdk8"))
 }

@@ -4,7 +4,7 @@ import com.demoprojekt.webshop.entity.OrderEntity
 import com.demoprojekt.webshop.exceptions.IdNotFoundException
 import com.demoprojekt.webshop.model.*
 import com.demoprojekt.webshop.repository.CustomerRepositroy
-import com.demoprojekt.webshop.repository.OrderPositionEntity
+import com.demoprojekt.webshop.entity.OrderPositionEntity
 import com.demoprojekt.webshop.repository.OrderRepository
 import com.demoprojekt.webshop.repository.ProductRepository
 import org.springframework.http.HttpStatus
