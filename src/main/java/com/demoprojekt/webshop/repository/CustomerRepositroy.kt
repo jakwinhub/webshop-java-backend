@@ -15,5 +15,6 @@ data class CustomerEntity(
         @Id val id: String,
         val firstName: String,
         val lastName: String,
-        val email: String
+        val email: String,
+        val salutation: String
 )

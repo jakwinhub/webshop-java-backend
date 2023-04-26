@@ -22,7 +22,7 @@ alter table if exists order_entity_order_positions
             references orders;
 
 alter table if exists order_entity_order_positions
-    add constraint order_positions_order_id_fk
+    add constraint order_positions_products_id_fk
         foreign key (product_id)
             references products;
 
