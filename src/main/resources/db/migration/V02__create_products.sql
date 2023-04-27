@@ -13,7 +13,7 @@ create table products
     primary key (id)
 );
 
-alter table if exists product_entity_tags
+alter table product_entity_tags
     add constraint FKmht84mxiy3fo058vjgvlyhnrk
         foreign key (product_entity_id)
-            references products;
+            references products(id);

@@ -16,17 +16,17 @@ create table orders
     primary key (id)
 );
 
-alter table if exists order_entity_order_positions
+alter table order_entity_order_positions
     add constraint order_positions_order_id_fk
         foreign key (order_entity_id)
-            references orders;
+            references orders(id);
 
-alter table if exists order_entity_order_positions
+alter table order_entity_order_positions
     add constraint order_positions_products_id_fk
         foreign key (product_id)
-            references products;
+            references products(id);
 
-alter table if exists orders
+alter table orders
     add constraint orders_customer_id_fk
         foreign key (customer_id)
-            references customers;
+            references customers(id);
