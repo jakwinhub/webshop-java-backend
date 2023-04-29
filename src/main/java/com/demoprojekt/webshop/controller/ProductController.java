@@ -11,13 +11,16 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
 @RestController
 public class ProductController {
     private final ProductRepository productRepository;
+    private final Map<String, List<ProductEntity>> productsCache = new HashMap<>();
 
     public ProductController(ProductRepository productRepository) {
         this.productRepository = productRepository;
@@ -25,11 +28,15 @@ public class ProductController {
 
     @GetMapping("/products")
     public List<ProductResponse> getAllProducts(@RequestParam(required = false) String tag) {
-        return productRepository
-                .findAll() //alle produkt entitys aus datenbank
+        if (productsCache.get(tag) == null) {
+            var products = tag == null ? productRepository.findAll() : productRepository.findByTag(tag);
+            productsCache.put(tag, products);
+        }
+
+        return productsCache
+                .get(tag) //get tag
                 .stream()  //wandeln die liste in einen stream um um filter zu benutzen
-                .filter((productEntity) -> tag == null || productEntity.getTags().contains(tag)) //behalten nur die entitys die den gefilterten tag beinhalten
-                .map(ProductController::mapToResponse)  //wandelt entity in response um
+                .map(this::mapToResponse)  //wandelt entity in response um
                 .collect(Collectors.toList());   // list von responses wird generiert
     }
 
@@ -40,7 +47,7 @@ public class ProductController {
     }
 
     @NotNull
-    private static ProductResponse mapToResponse(ProductEntity product) {
+    private ProductResponse mapToResponse(ProductEntity product) {
         return new ProductResponse(
                 product.getId(),
                 product.getName(),
@@ -52,12 +59,14 @@ public class ProductController {
 
     @DeleteMapping("/products/{id}")
     public ResponseEntity deleteProduct(@PathVariable String id) {
+        productsCache.clear();
         productRepository.deleteById(id);
         return ResponseEntity.noContent().build();
     }
 
     @PostMapping("/products")
     public ProductResponse createProduct(@RequestBody ProductCreateRequest request) {
+        productsCache.clear();
         ProductEntity productEntity = new ProductEntity(
                 UUID.randomUUID().toString(),
                 request.getName(),
@@ -74,6 +83,7 @@ public class ProductController {
             @RequestBody ProductUpdateRequest request,
             @PathVariable String id
     ) {
+        productsCache.clear();
         final ProductEntity product = productRepository.findById(id)
                 .orElseThrow(() ->
                         new IdNotFoundException(
