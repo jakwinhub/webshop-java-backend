@@ -7,34 +7,31 @@ import com.demoprojekt.webshop.model.ProductResponse;
 import com.demoprojekt.webshop.model.ProductUpdateRequest;
 import com.demoprojekt.webshop.repository.ProductRepository;
 import org.jetbrains.annotations.NotNull;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
 @RestController
 public class ProductController {
     private final ProductRepository productRepository;
-    private final Map<String, List<ProductEntity>> productsCache = new HashMap<>();
 
     public ProductController(ProductRepository productRepository) {
         this.productRepository = productRepository;
     }
-
+    @Cacheable("productsResponses")
     @GetMapping("/products")
     public List<ProductResponse> getAllProducts(@RequestParam(required = false) String tag) {
-        if (productsCache.get(tag) == null) {
-            var products = tag == null ? productRepository.findAll() : productRepository.findByTag(tag);
-            productsCache.put(tag, products);
-        }
+        var products = tag == null
+                ? productRepository.findAll()
+                : productRepository.findByTag(tag);
 
-        return productsCache
-                .get(tag) //get tag
+        return products //alle produkt entitys aus datenbank
                 .stream()  //wandeln die liste in einen stream um um filter zu benutzen
                 .map(this::mapToResponse)  //wandelt entity in response um
                 .collect(Collectors.toList());   // list von responses wird generiert
@@ -57,16 +54,16 @@ public class ProductController {
         );
     }
 
+    @CacheEvict(value = "productsResponses", allEntries = true)
     @DeleteMapping("/products/{id}")
     public ResponseEntity deleteProduct(@PathVariable String id) {
-        productsCache.clear();
         productRepository.deleteById(id);
         return ResponseEntity.noContent().build();
     }
 
+    @CacheEvict(value = "productsResponses", allEntries = true)
     @PostMapping("/products")
     public ProductResponse createProduct(@RequestBody ProductCreateRequest request) {
-        productsCache.clear();
         ProductEntity productEntity = new ProductEntity(
                 UUID.randomUUID().toString(),
                 request.getName(),
@@ -78,12 +75,12 @@ public class ProductController {
         return mapToResponse(savedProduct);
     }
 
+    @CacheEvict(value = "productsResponses", allEntries = true)
     @PutMapping("/products/{id}")
     public ProductResponse updateProduct(
             @RequestBody ProductUpdateRequest request,
             @PathVariable String id
     ) {
-        productsCache.clear();
         final ProductEntity product = productRepository.findById(id)
                 .orElseThrow(() ->
                         new IdNotFoundException(

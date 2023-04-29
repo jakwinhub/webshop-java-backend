@@ -6,9 +6,8 @@ import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 
-public interface ProductRepository extends JpaRepository<ProductEntity, String > {
+public interface ProductRepository extends JpaRepository<ProductEntity, String> {
 
     @Query(value = "select p from ProductEntity p join fetch p.tags t where t = :tag")
-
     List<ProductEntity> findByTag(String tag);
 }
