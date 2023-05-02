@@ -1,7 +1,7 @@
 package com.demoprojekt.webshop.controller;
 
 import com.demoprojekt.webshop.entity.ProductEntity;
-import com.demoprojekt.webshop.exceptions.IdNotFoundException;
+import com.demoprojekt.webshop.exception.IdNotFoundException;
 import com.demoprojekt.webshop.model.ProductCreateRequest;
 import com.demoprojekt.webshop.model.ProductResponse;
 import com.demoprojekt.webshop.model.ProductUpdateRequest;

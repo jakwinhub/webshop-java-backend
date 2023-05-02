@@ -20,9 +20,11 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-web")
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 	implementation("org.springframework.boot:spring-boot-starter-cache")
+
 	// https://mvnrepository.com/artifact/com.github.ben-manes.caffeine/caffeine
 	implementation("com.github.ben-manes.caffeine:caffeine:3.1.5")
-	runtimeOnly("com.h2database:h2:2.1.210")
+	//runtimeOnly("com.h2database:h2:2.1.210")
+
 	// https://mvnrepository.com/artifact/mysql/mysql-connector-java
 	runtimeOnly("mysql:mysql-connector-java:8.0.33")
 	implementation ("org.flywaydb:flyway-mysql")
@@ -36,6 +38,11 @@ dependencies {
 	implementation(kotlin("stdlib-jdk8"))
 }
 
+tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
+	kotlinOptions {
+		jvmTarget = "17"
+	}
+}
 
 tasks.withType<Test> {
 	useJUnitPlatform()

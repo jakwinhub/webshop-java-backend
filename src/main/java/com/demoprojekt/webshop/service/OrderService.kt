@@ -1,7 +1,7 @@
 package com.demoprojekt.webshop.service
 
 import com.demoprojekt.webshop.entity.OrderEntity
-import com.demoprojekt.webshop.exceptions.IdNotFoundException
+import com.demoprojekt.webshop.exception.IdNotFoundException
 import com.demoprojekt.webshop.model.*
 import com.demoprojekt.webshop.repository.CustomerRepositroy
 import com.demoprojekt.webshop.entity.OrderPositionEntity

@@ -2,7 +2,7 @@ package com.demoprojekt.webshop.service
 
 import com.demoprojekt.webshop.entity.OrderEntity
 import com.demoprojekt.webshop.entity.ProductEntity
-import com.demoprojekt.webshop.exceptions.IdNotFoundException
+import com.demoprojekt.webshop.exception.IdNotFoundException
 import com.demoprojekt.webshop.model.OrderPositionResponse
 import com.demoprojekt.webshop.model.ShoppingCartResponse
 import com.demoprojekt.webshop.repository.OrderRepository

@@ -1,4 +1,4 @@
-package com.demoprojekt.webshop.exceptions
+package com.demoprojekt.webshop.exception
 
 import org.springframework.http.HttpStatus
 
