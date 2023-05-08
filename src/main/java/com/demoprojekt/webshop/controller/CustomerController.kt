@@ -6,6 +6,8 @@ import com.demoprojekt.webshop.model.ShoppingCartResponse
 import com.demoprojekt.webshop.repository.CustomerEntity
 import com.demoprojekt.webshop.repository.CustomerRepositroy
 import com.demoprojekt.webshop.service.ShoppingCartService
+import io.swagger.annotations.ApiOperation
+import io.swagger.annotations.ApiParam
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RestController
@@ -20,7 +22,7 @@ class CustomerController(
     @GetMapping("/customers/{id}")
     fun getCustomerById(@PathVariable id: String): CustomerResponse {
 
-        val jokeResponse =chuckNorrisFactsClient.getRandomFact()
+        val jokeResponse = chuckNorrisFactsClient.getRandomFact()
 
         val customer: CustomerEntity = customerRepository.getOne(id)
         return CustomerResponse(
@@ -32,8 +34,11 @@ class CustomerController(
         )
     }
 
+    @ApiOperation(value = "Load shopping cart by customer id")
     @GetMapping("/customers/{id}/shoppingcart")
-    fun getShoppingCartByCustomerId(@PathVariable id: String): ShoppingCartResponse {
+    fun getShoppingCartByCustomerId(
+            @ApiParam(value = "Customer Id", required = true)
+            @PathVariable id: String): ShoppingCartResponse {
         return shoppingCartService.getShoppingCartForCustomer(id)
     }
 }

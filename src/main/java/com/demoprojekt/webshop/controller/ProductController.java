@@ -1,5 +1,6 @@
 package com.demoprojekt.webshop.controller;
 
+import com.demoprojekt.webshop.config.Frontend;
 import com.demoprojekt.webshop.entity.ProductEntity;
 import com.demoprojekt.webshop.exception.IdNotFoundException;
 import com.demoprojekt.webshop.model.ProductCreateRequest;
@@ -24,6 +25,7 @@ public class ProductController {
     public ProductController(ProductRepository productRepository) {
         this.productRepository = productRepository;
     }
+
     @Cacheable("productsResponses")
     @GetMapping("/products")
     public List<ProductResponse> getAllProducts(@RequestParam(required = false) String tag) {
@@ -37,6 +39,7 @@ public class ProductController {
                 .collect(Collectors.toList());   // list von responses wird generiert
     }
 
+    @Frontend
     @GetMapping("/products/{id}")
     public ProductResponse getProductById(@PathVariable String id) {
         ProductEntity product = productRepository.getOne(id);

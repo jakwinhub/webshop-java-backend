@@ -1,5 +1,6 @@
 package com.demoprojekt.webshop.controller
 
+import com.demoprojekt.webshop.config.Frontend
 import com.demoprojekt.webshop.model.*
 import com.demoprojekt.webshop.service.OrderService
 import org.springframework.web.bind.annotation.*
@@ -21,7 +22,7 @@ class OrderController(
             @RequestBody request: OrderPositionCreateRequest) {
         orderService.createNewPositionForOrder(orderId, request)
     }
-
+    @Frontend
     @PutMapping("/orders/{id}")
     fun updateOrder(
             @PathVariable id: String,
